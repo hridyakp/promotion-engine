@@ -7,6 +7,6 @@ import java.util.List;
 
 public class PromotionService {
     public int applyPromotion(Order order, List<Promotion> promotions) {
-        return 100;
+        return 0;
     }
 }
