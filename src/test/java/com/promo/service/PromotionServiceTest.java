@@ -1,8 +1,8 @@
 package com.promo.service;
 
-import com.promo.model.Item;
-import com.promo.model.Order;
-import com.promo.model.Promotion;
+import com.promo.entity.Item;
+import com.promo.entity.Order;
+import com.promo.entity.Promotion;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

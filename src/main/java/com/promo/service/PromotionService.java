@@ -1,7 +1,7 @@
 package com.promo.service;
 
-import com.promo.model.Order;
-import com.promo.model.Promotion;
+import com.promo.entity.Order;
+import com.promo.entity.Promotion;
 
 import java.util.List;
 
