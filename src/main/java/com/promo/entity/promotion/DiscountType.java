@@ -1,4 +1,4 @@
-package com.promo.entity;
+package com.promo.entity.promotion;
 
 public enum DiscountType {
     FIXED_PRICE,

@@ -1,6 +1,8 @@
 package com.promo.service;
 
-import com.promo.entity.*;
+import com.promo.entity.order.Item;
+import com.promo.entity.order.Order;
+import com.promo.entity.promotion.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -66,7 +68,7 @@ public class PromotionServiceTest {
         Promotion promotion1 = new SingleSKUPromotion(promotionItemA, DiscountType.FIXED_PRICE, 130);
 
         PromotionItem promotionItemB = new PromotionItem("B", 2);
-        Promotion promotion2 = new SingleSKUPromotion(promotionItemA, DiscountType.FIXED_PRICE, 45);
+        Promotion promotion2 = new SingleSKUPromotion(promotionItemB, DiscountType.FIXED_PRICE, 45);
 
         PromotionItem promotionItemC = new PromotionItem("C", 1);
         PromotionItem promotionItemD = new PromotionItem("D", 1);

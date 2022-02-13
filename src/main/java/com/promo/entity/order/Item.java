@@ -1,4 +1,4 @@
-package com.promo.entity;
+package com.promo.entity.order;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,15 +1,13 @@
-package com.promo.entity;
+package com.promo.entity.promotion;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.ToString;
 
-import java.util.List;
-
 @Data
 @ToString
 @AllArgsConstructor
-public class Order {
-    private List<Item> items;
-
+public class PromotionItem {
+    private String SKU;
+    private int quantity;
 }
