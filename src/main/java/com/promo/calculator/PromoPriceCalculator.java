@@ -45,16 +45,20 @@ public class PromoPriceCalculator implements Calculator {
                 if (null == multiSKUPromotions || multiSKUPromotions.isEmpty()) {
                     break;
                 }
+                int skuPromotionQuantity = 0;
                 for (MultiSKUPromotion multiSKUpromotion : multiSKUPromotions) {
                     for (PromotionItem promotionItem : multiSKUpromotion.getPromotionItems()) {
+                        if(promotionItem.getSKU().equals(sku)){
+                            skuPromotionQuantity= promotionItem.getQuantity();
+                        }
                         if (skuQuantityMap.get(promotionItem.getSKU()) < promotionItem.getQuantity()) {
                             break;
                         }
                     }
+                    skuQuantity = skuQuantity - skuPromotionQuantity;
                     totalValue = applyMultiSKUPromotion(skuPriceMap, skuQuantityMap, totalValue, multiSKUpromotion);
                 }
             }
-            skuQuantityMap.put(sku, skuQuantity);
         }
 
         //Apply price without promotion

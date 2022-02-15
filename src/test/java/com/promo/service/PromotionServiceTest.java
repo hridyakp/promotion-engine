@@ -3,6 +3,7 @@ package com.promo.service;
 import com.promo.entity.order.Item;
 import com.promo.entity.order.Order;
 import com.promo.entity.promotion.*;
+import com.promo.util.TestUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +18,7 @@ public class PromotionServiceTest {
     @DisplayName(value = "Scenario A")
     public void testApplyPromotionScenarioA() {
         PromotionService service = new PromotionService();
-        List<Promotion> promotions = getActivePromotions();
+        List<Promotion> promotions = TestUtil.getActivePromotions();
         List<Item> items = new ArrayList<>();
         Collections.addAll(items,
                 new Item("A", 1, 50),
@@ -32,7 +33,7 @@ public class PromotionServiceTest {
     @DisplayName(value = "Scenario B")
     public void testApplyPromotionScenarioB() {
         PromotionService service = new PromotionService();
-        List<Promotion> promotions = getActivePromotions();
+        List<Promotion> promotions = TestUtil.getActivePromotions();
         List<Item> items = new ArrayList<>();
         Collections.addAll(items,
                 new Item("A", 5, 50),
@@ -47,7 +48,7 @@ public class PromotionServiceTest {
     @DisplayName(value = "Scenario C")
     public void testApplyPromotionScenarioC() {
         PromotionService service = new PromotionService();
-        List<Promotion> promotions = getActivePromotions();
+        List<Promotion> promotions = TestUtil.getActivePromotions();
         List<Item> items = new ArrayList<>();
         Collections.addAll(items,
                 new Item("A", 3, 50),
@@ -59,23 +60,5 @@ public class PromotionServiceTest {
         Assertions.assertEquals(280, discountedPrice);
     }
 
-    private List<Promotion> getActivePromotions() {
-        List<Promotion> promotions = new ArrayList();
 
-        ArrayList<PromotionItem> promotionItems = new ArrayList<>();
-
-        PromotionItem promotionItemA = new PromotionItem("A", 3);
-        Promotion promotion1 = new SingleSKUPromotion(promotionItemA, DiscountType.FIXED_PRICE, 130);
-
-        PromotionItem promotionItemB = new PromotionItem("B", 2);
-        Promotion promotion2 = new SingleSKUPromotion(promotionItemB, DiscountType.FIXED_PRICE, 45);
-
-        PromotionItem promotionItemC = new PromotionItem("C", 1);
-        PromotionItem promotionItemD = new PromotionItem("D", 1);
-        Collections.addAll(promotionItems, promotionItemC, promotionItemD);
-        Promotion promotion3 = new MultiSKUPromotion(promotionItems, DiscountType.FIXED_PRICE, 45);
-
-        Collections.addAll(promotions, promotion1, promotion2, promotion3);
-        return promotions;
-    }
 }
