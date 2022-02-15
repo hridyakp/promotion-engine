@@ -2,10 +2,16 @@ package com.promo.calculator;
 
 import com.promo.entity.order.Item;
 import com.promo.entity.order.Order;
-import com.promo.entity.promotion.*;
+import com.promo.entity.promotion.DiscountType;
+import com.promo.entity.promotion.MultiSKUPromotion;
+import com.promo.entity.promotion.PromotionItem;
+import com.promo.entity.promotion.SingleSKUPromotion;
 import com.promo.helper.QuantityComparator;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class PromoPriceCalculator implements Calculator {
@@ -17,11 +23,12 @@ public class PromoPriceCalculator implements Calculator {
 
         int totalValue = 0;
 
-        for(String sku : skus){
+        //Apply Single SKU promotion
+        for (String sku : skus) {
             int skuQuantity = skuQuantityMap.get(sku);
-            while(skuQuantity > 0){
+            while (skuQuantity > 0) {
                 SingleSKUPromotion singleSKUPromotion = checkValidSinglePromotion(sku, skuQuantity, singlePromoMap.get(sku));
-                if(null == singleSKUPromotion){
+                if (null == singleSKUPromotion) {
                     break;
                 }
                 totalValue = applySingleSKUPromotion(skuPriceMap, totalValue, sku, singleSKUPromotion);
@@ -30,73 +37,88 @@ public class PromoPriceCalculator implements Calculator {
             skuQuantityMap.put(sku, skuQuantity);
         }
 
-
-        for(String sku : skus){
+        //Apply Multiple SKU promotion
+        for (String sku : skus) {
             int skuQuantity = skuQuantityMap.get(sku);
-            while(skuQuantity > 0){
+            while (skuQuantity > 0) {
                 List<MultiSKUPromotion> multiSKUPromotions = checkValidMultiPromotion(sku, skuQuantity, multiPromoMap.get(sku));
-                if(null == multiSKUPromotions || multiSKUPromotions.isEmpty()){
+                if (null == multiSKUPromotions || multiSKUPromotions.isEmpty()) {
                     break;
                 }
-                for(MultiSKUPromotion multiSKUpromotion : multiSKUPromotions){
-                   for(PromotionItem promotionItem : multiSKUpromotion.getPromotionItems()){
-                      if(skuQuantityMap.get(promotionItem.getSKU()) < promotionItem.getQuantity()){
-                         break;
-                      }
-                   }
-                   totalValue = applyMultiSKUPromotion(skuPriceMap, skuQuantityMap, totalValue, multiSKUpromotion);
+                for (MultiSKUPromotion multiSKUpromotion : multiSKUPromotions) {
+                    for (PromotionItem promotionItem : multiSKUpromotion.getPromotionItems()) {
+                        if (skuQuantityMap.get(promotionItem.getSKU()) < promotionItem.getQuantity()) {
+                            break;
+                        }
+                    }
+                    totalValue = applyMultiSKUPromotion(skuPriceMap, skuQuantityMap, totalValue, multiSKUpromotion);
                 }
             }
             skuQuantityMap.put(sku, skuQuantity);
         }
+
+        //Apply price without promotion
+        for(Map.Entry<String, Integer> entry : skuPriceMap.entrySet()){
+           int quantity = skuQuantityMap.get(entry.getKey());
+           int price = entry.getValue();
+           totalValue = totalValue + price * quantity;
+        }
+
         return totalValue;
     }
 
     private int applyMultiSKUPromotion(Map<String, Integer> skuPriceMap, Map<String, Integer> skuQuantityMap, int totalValue, MultiSKUPromotion multiSKUpromotion) {
         List<PromotionItem> items = multiSKUpromotion.getPromotionItems();
-        if(multiSKUpromotion.getDiscountType().equals(DiscountType.FIXED_PRICE)){
+        if (multiSKUpromotion.getDiscountType().equals(DiscountType.FIXED_PRICE)) {
             totalValue = totalValue + multiSKUpromotion.getValue();
-            for (PromotionItem item : items){
+            for (PromotionItem item : items) {
                 int balanceQuantity = skuQuantityMap.get(item.getSKU());
                 skuQuantityMap.put(item.getSKU(), balanceQuantity - item.getQuantity());
             }
         } else {
             int totalItemPrice = 0;
-            for (PromotionItem item : items){
+            for (PromotionItem item : items) {
                 totalItemPrice = totalItemPrice + skuPriceMap.get(item.getSKU()) * item.getQuantity();
                 int balanceQuantity = skuQuantityMap.get(item.getSKU());
                 skuQuantityMap.put(item.getSKU(), balanceQuantity - item.getQuantity());
             }
-            int reducedSKUPrice = totalItemPrice * (multiSKUpromotion.getValue()/100);
+            int reducedSKUPrice = totalItemPrice * (multiSKUpromotion.getValue() / 100);
             totalValue = totalValue + reducedSKUPrice;
         }
         return totalValue;
     }
 
     private int applySingleSKUPromotion(Map<String, Integer> skuPriceMap, int totalValue, String sku, SingleSKUPromotion singleSKUPromotion) {
-        if(singleSKUPromotion.getDiscountType().equals(DiscountType.FIXED_PRICE)){
+        if (singleSKUPromotion.getDiscountType().equals(DiscountType.FIXED_PRICE)) {
             totalValue = totalValue + singleSKUPromotion.getValue();
-        } else{
-            int reducedSKUPrice = skuPriceMap.get(sku) * (singleSKUPromotion.getValue()/100);
+        } else {
+            int reducedSKUPrice = skuPriceMap.get(sku) * (singleSKUPromotion.getValue() / 100);
             totalValue = totalValue + ((reducedSKUPrice) * (singleSKUPromotion.getPromotionItem().getQuantity()));
         }
         return totalValue;
     }
 
     private SingleSKUPromotion checkValidSinglePromotion(String sku, int skuQuantity, List<SingleSKUPromotion> singleSKUPromotions) {
-        Collections.sort(singleSKUPromotions, new QuantityComparator());
-        Optional<SingleSKUPromotion> promotion = singleSKUPromotions.stream().filter(x -> x.getPromotionItem().getQuantity() <= skuQuantity).findFirst();
-        return promotion.get();
+        if(null != singleSKUPromotions){
+            Collections.sort(singleSKUPromotions, new QuantityComparator());
+            Optional<SingleSKUPromotion> promotion = singleSKUPromotions.stream().filter(x -> x.getPromotionItem().getQuantity() <= skuQuantity).findFirst();
+            if (promotion.isPresent())
+                return promotion.get();
+        }
+         return null;
     }
 
     private List<MultiSKUPromotion> checkValidMultiPromotion(String sku, int skuQuantity, List<MultiSKUPromotion> multiSKUPromotions) {
-        List<MultiSKUPromotion> promotion = multiSKUPromotions.stream().filter(x -> checkSKUQuantity(sku, skuQuantity, x.getPromotionItems())).collect(Collectors.toList());
-        return promotion;
+        if(null != multiSKUPromotions){
+            List<MultiSKUPromotion> promotion = multiSKUPromotions.stream().filter(x -> checkSKUQuantity(sku, skuQuantity, x.getPromotionItems())).collect(Collectors.toList());
+             return promotion;
+        }
+        return null;
     }
 
     private boolean checkSKUQuantity(String sku, int skuQuantity, List<PromotionItem> promotionItems) {
-        for (PromotionItem item : promotionItems){
-            if (item.getSKU().equals(sku) && skuQuantity >= item.getQuantity()){
+        for (PromotionItem item : promotionItems) {
+            if (item.getSKU().equals(sku) && skuQuantity >= item.getQuantity()) {
                 return true;
             }
         }
