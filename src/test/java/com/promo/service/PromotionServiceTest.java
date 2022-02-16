@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Test class containing Scenario A, B, C and some additional test cases
+ */
 public class PromotionServiceTest {
 
     @Test

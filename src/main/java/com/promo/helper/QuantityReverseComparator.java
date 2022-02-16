@@ -4,7 +4,7 @@ import com.promo.entity.promotion.SingleSKUPromotion;
 
 import java.util.Comparator;
 
-public class QuantityComparator implements Comparator<SingleSKUPromotion> {
+public class QuantityReverseComparator implements Comparator<SingleSKUPromotion> {
 
     @Override
     public int compare(SingleSKUPromotion o1, SingleSKUPromotion o2) {

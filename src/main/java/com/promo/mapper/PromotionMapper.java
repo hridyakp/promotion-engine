@@ -10,7 +10,7 @@ import com.promo.entity.promotion.MultiSKUPromotion;
 import com.promo.entity.promotion.Promotion;
 import com.promo.entity.promotion.PromotionItem;
 import com.promo.entity.promotion.SingleSKUPromotion;
-import com.promo.helper.QuantityComparator;
+import com.promo.helper.QuantityReverseComparator;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -112,7 +112,7 @@ public class PromotionMapper {
 
     private SingleSKUPromotion checkValidSinglePromotion(String sku, int skuQuantity, List<SingleSKUPromotion> singleSKUPromotions) {
         if (null != singleSKUPromotions) {
-            Collections.sort(singleSKUPromotions, new QuantityComparator());
+            Collections.sort(singleSKUPromotions, new QuantityReverseComparator());
             Optional<SingleSKUPromotion> promotion = singleSKUPromotions.stream()
                     .filter(x -> x.getPromotionItem().getQuantity() <= skuQuantity)
                     .findFirst();
