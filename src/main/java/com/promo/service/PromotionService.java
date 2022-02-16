@@ -1,5 +1,7 @@
 package com.promo.service;
 
+import com.promo.calculator.ItemPromotionMapper;
+import com.promo.entity.ItemPromotion;
 import com.promo.entity.order.Item;
 import com.promo.entity.order.Order;
 import com.promo.entity.promotion.MultiSKUPromotion;
@@ -18,7 +20,10 @@ public class PromotionService {
         Map<String, Integer> skuQuantityMap = order.getItems().stream().collect(Collectors.toMap(Item::getSKU, Item::getQuantity));
         Map<String, List<MultiSKUPromotion>> multiPromoMap = MultiSKUPromotionFinder.getPromotions(activePromotions, skus, skuQuantityMap);
         Map<String, List<SingleSKUPromotion>> singlePromoMap = SingleSKUPromotionFinder.getPromotions(activePromotions, skus, skuQuantityMap);
+        ItemPromotionMapper matcher = new ItemPromotionMapper();
+        List<ItemPromotion> itemPromotions = matcher.getOrderValue(order, singlePromoMap, multiPromoMap);
         CalculateService calculateService = new CalculateService();
         return calculateService.calculateTotalPrice(order, singlePromoMap, multiPromoMap);
     }
+
 }
