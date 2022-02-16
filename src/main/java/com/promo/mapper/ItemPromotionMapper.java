@@ -1,4 +1,4 @@
-package com.promo.calculator;
+package com.promo.mapper;
 
 import com.promo.entity.ItemPromotion;
 import com.promo.entity.order.Item;

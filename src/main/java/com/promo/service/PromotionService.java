@@ -1,6 +1,6 @@
 package com.promo.service;
 
-import com.promo.calculator.ItemPromotionMapper;
+import com.promo.mapper.ItemPromotionMapper;
 import com.promo.entity.ItemPromotion;
 import com.promo.entity.order.Item;
 import com.promo.entity.order.Order;
