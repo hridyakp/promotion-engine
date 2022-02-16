@@ -1,4 +1,4 @@
-package com.promo.entity;
+package com.promo.entity.orderpromotion;
 
 import com.promo.entity.order.Item;
 import com.promo.entity.promotion.Promotion;

@@ -1,6 +1,6 @@
 package com.promo.service;
 
-import com.promo.entity.OrderPromotion;
+import com.promo.entity.orderpromotion.OrderPromotion;
 import com.promo.entity.order.Item;
 import com.promo.entity.order.Order;
 import com.promo.entity.promotion.MultiSKUPromotion;

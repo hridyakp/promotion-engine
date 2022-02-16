@@ -1,7 +1,6 @@
 package com.promo.calculator;
 
-import com.promo.entity.ItemPromotion;
-import com.promo.entity.NonPromotionalItem;
+import com.promo.entity.orderpromotion.NonPromotionalItem;
 
 import java.util.List;
 

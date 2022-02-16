@@ -1,9 +1,9 @@
 package com.promo.mapper;
 
-import com.promo.entity.ComboPromotion;
-import com.promo.entity.ItemPromotion;
-import com.promo.entity.NonPromotionalItem;
-import com.promo.entity.OrderPromotion;
+import com.promo.entity.orderpromotion.ComboPromotion;
+import com.promo.entity.orderpromotion.ItemPromotion;
+import com.promo.entity.orderpromotion.NonPromotionalItem;
+import com.promo.entity.orderpromotion.OrderPromotion;
 import com.promo.entity.order.Item;
 import com.promo.entity.order.Order;
 import com.promo.entity.promotion.MultiSKUPromotion;

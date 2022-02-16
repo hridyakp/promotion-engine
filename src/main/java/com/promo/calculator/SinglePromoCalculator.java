@@ -1,6 +1,6 @@
 package com.promo.calculator;
 
-import com.promo.entity.ItemPromotion;
+import com.promo.entity.orderpromotion.ItemPromotion;
 import com.promo.entity.promotion.DiscountType;
 import com.promo.entity.promotion.SingleSKUPromotion;
 

@@ -3,10 +3,10 @@ package com.promo.service;
 import com.promo.calculator.MultiPromoCalculator;
 import com.promo.calculator.PriceCalculator;
 import com.promo.calculator.SinglePromoCalculator;
-import com.promo.entity.ComboPromotion;
-import com.promo.entity.ItemPromotion;
-import com.promo.entity.NonPromotionalItem;
-import com.promo.entity.OrderPromotion;
+import com.promo.entity.orderpromotion.ComboPromotion;
+import com.promo.entity.orderpromotion.ItemPromotion;
+import com.promo.entity.orderpromotion.NonPromotionalItem;
+import com.promo.entity.orderpromotion.OrderPromotion;
 
 import java.util.List;
 
