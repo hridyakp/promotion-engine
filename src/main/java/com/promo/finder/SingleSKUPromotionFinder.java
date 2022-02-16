@@ -23,9 +23,11 @@ public class SingleSKUPromotionFinder {
     private static boolean getMatchingSinglePromotion(SingleSKUPromotion promotion, List<String> skus, Map<String, Integer> skuQuantityMap) {
         String sku = promotion.getPromotionItem().getSKU();
         int promotionQuantity = promotion.getPromotionItem().getQuantity();
-        int orderQuantity = skuQuantityMap.get(sku);
-        if (skus.contains(sku) && orderQuantity >= promotionQuantity) {
-            return true;
+        if(skus.contains(sku)){
+            int orderQuantity = skuQuantityMap.get(sku);
+            if (orderQuantity >= promotionQuantity) {
+                return true;
+            }
         }
         return false;
     }

@@ -2,7 +2,7 @@ package com.promo.service;
 
 import com.promo.entity.order.Item;
 import com.promo.entity.order.Order;
-import com.promo.entity.promotion.*;
+import com.promo.entity.promotion.Promotion;
 import com.promo.util.TestUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -12,99 +12,88 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class PromotionServiceTest {
+/**
+ * Test class to test different scenarios when more than one single sku promotion applied on a SKU
+ * Promotion applied are 4R-> 75%4R (percentage) and  3R-> 60 (fixed price)
+ * Promotion with max quantity is applied first
+ */
+public class SingleSKUPromotionTest {
 
     @Test
-    @DisplayName(value = "Scenario A")
-    public void testApplyPromotionScenarioA() {
-        PromotionService service = new PromotionService();
-        List<Promotion> promotions = TestUtil.getActivePromotions();
-        List<Item> items = new ArrayList<>();
-        Collections.addAll(items,
-                new Item("A", 1, 50),
-                new Item("B", 1, 30),
-                new Item("C", 1, 20));
-        Order order = new Order(items);
-        int discountedPrice = service.applyPromotion(order, promotions);
-        Assertions.assertEquals(100, discountedPrice);
-    }
-
-    @Test
-    @DisplayName(value = "Scenario B")
-    public void testApplyPromotionScenarioB() {
-        PromotionService service = new PromotionService();
-        List<Promotion> promotions = TestUtil.getActivePromotions();
-        List<Item> items = new ArrayList<>();
-        Collections.addAll(items,
-                new Item("A", 5, 50),
-                new Item("B", 5, 30),
-                new Item("C", 1, 20));
-        Order order = new Order(items);
-        int discountedPrice = service.applyPromotion(order, promotions);
-        Assertions.assertEquals(370, discountedPrice);
-    }
-
-    @Test
-    @DisplayName(value = "Scenario C")
-    public void testApplyPromotionScenarioC() {
-        PromotionService service = new PromotionService();
-        List<Promotion> promotions = TestUtil.getActivePromotions();
-        List<Item> items = new ArrayList<>();
-        Collections.addAll(items,
-                new Item("A", 3, 50),
-                new Item("B", 5, 30),
-                new Item("C", 1, 20),
-                new Item("D", 1, 15));
-        Order order = new Order(items);
-        int discountedPrice = service.applyPromotion(order, promotions);
-        Assertions.assertEquals(280, discountedPrice);
-    }
-
-    @Test
-    @DisplayName(value = "Promo applied twice on same set C & D")
+    @DisplayName(value = "No promotion applied")
     public void testApplyPromotion1() {
         PromotionService service = new PromotionService();
         List<Promotion> promotions = TestUtil.getActivePromotions();
         List<Item> items = new ArrayList<>();
         Collections.addAll(items,
-                new Item("A", 1, 50),
-                new Item("B", 1, 30),
-                new Item("C", 2, 20),
-                new Item("D", 2, 15));
+                new Item("R", 2, 25));
         Order order = new Order(items);
         int discountedPrice = service.applyPromotion(order, promotions);
-        Assertions.assertEquals(140, discountedPrice);
+        Assertions.assertEquals(50, discountedPrice);
     }
 
     @Test
-    @DisplayName(value = "MultiPromo and non promotional item in same sku D")
+    @DisplayName(value = "3R-> 60 (fixed price) applied")
     public void testApplyPromotion2() {
         PromotionService service = new PromotionService();
         List<Promotion> promotions = TestUtil.getActivePromotions();
         List<Item> items = new ArrayList<>();
         Collections.addAll(items,
-                new Item("A", 1, 50),
-                new Item("B", 1, 30),
-                new Item("C", 1, 20),
-                new Item("D", 2, 15));
+                new Item("R", 3, 25));
+        Order order = new Order(items);
+        int discountedPrice = service.applyPromotion(order, promotions);
+        Assertions.assertEquals(60, discountedPrice);
+    }
+
+    @Test
+    @DisplayName(value = "4R-> 75%4R applied")
+    public void testApplyPromotion3() {
+        PromotionService service = new PromotionService();
+        List<Promotion> promotions = TestUtil.getActivePromotions();
+        List<Item> items = new ArrayList<>();
+        Collections.addAll(items,
+                new Item("R", 4, 25));
+        Order order = new Order(items);
+        int discountedPrice = service.applyPromotion(order, promotions);
+        Assertions.assertEquals(75, discountedPrice);
+    }
+
+    @Test
+    @DisplayName(value = "4R-> 75%4R applied once")
+    public void testApplyPromotion4() {
+        PromotionService service = new PromotionService();
+        List<Promotion> promotions = TestUtil.getActivePromotions();
+        List<Item> items = new ArrayList<>();
+        Collections.addAll(items,
+                new Item("R", 6, 25));
         Order order = new Order(items);
         int discountedPrice = service.applyPromotion(order, promotions);
         Assertions.assertEquals(125, discountedPrice);
     }
 
     @Test
-    @DisplayName(value = "Single sku promotion and multi sku promotion applied multiple times")
-    public void testApplyPromotion3() {
+    @DisplayName(value = "4R-> 75%4R  and 3R-> 60 applied once")
+    public void testApplyPromotion5() {
         PromotionService service = new PromotionService();
         List<Promotion> promotions = TestUtil.getActivePromotions();
         List<Item> items = new ArrayList<>();
         Collections.addAll(items,
-                new Item("A", 4, 50),
-                new Item("B", 3, 30),
-                new Item("C", 2, 20),
-                new Item("D", 2, 15));
+                new Item("R", 7, 25));
         Order order = new Order(items);
         int discountedPrice = service.applyPromotion(order, promotions);
-        Assertions.assertEquals(315, discountedPrice);
+        Assertions.assertEquals(135, discountedPrice);
+    }
+
+    @Test
+    @DisplayName(value = "4R-> 75%4R  and 3R-> 60 applied once")
+    public void testApplyPromotion6() {
+        PromotionService service = new PromotionService();
+        List<Promotion> promotions = TestUtil.getActivePromotions();
+        List<Item> items = new ArrayList<>();
+        Collections.addAll(items,
+                new Item("R", 8, 25));
+        Order order = new Order(items);
+        int discountedPrice = service.applyPromotion(order, promotions);
+        Assertions.assertEquals(160, discountedPrice);
     }
 }
