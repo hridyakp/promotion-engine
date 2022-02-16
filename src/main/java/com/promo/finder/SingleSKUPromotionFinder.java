@@ -3,6 +3,7 @@ package com.promo.finder;
 import com.promo.entity.promotion.Promotion;
 import com.promo.entity.promotion.SingleSKUPromotion;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -15,6 +16,7 @@ public class SingleSKUPromotionFinder {
                 .map(SingleSKUPromotion.class::cast)
                 .filter(x -> getMatchingSinglePromotion(x, skus, skuQuantityMap))
                 .collect(Collectors.toList());
+        //Collections.sort(matchingSinglePromotions, new);
         Map<String, List<SingleSKUPromotion>> singleSKUPromotionMap = matchingSinglePromotions.stream()
                 .collect(Collectors.groupingBy(x -> x.getPromotionItem().getSKU()));
         return singleSKUPromotionMap;

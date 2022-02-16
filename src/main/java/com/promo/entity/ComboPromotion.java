@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 public class ComboPromotion {
     List<Item> items;
-    private int totalPrice;
+    private float totalPrice;
     private Promotion promotion;
 
 }

@@ -28,7 +28,7 @@ public class SingleSKUPromotionTest {
         Collections.addAll(items,
                 new Item("R", 2, 25));
         Order order = new Order(items);
-        int discountedPrice = service.applyPromotion(order, promotions);
+        float discountedPrice = service.applyPromotion(order, promotions);
         Assertions.assertEquals(50, discountedPrice);
     }
 
@@ -41,7 +41,7 @@ public class SingleSKUPromotionTest {
         Collections.addAll(items,
                 new Item("R", 3, 25));
         Order order = new Order(items);
-        int discountedPrice = service.applyPromotion(order, promotions);
+        float discountedPrice = service.applyPromotion(order, promotions);
         Assertions.assertEquals(60, discountedPrice);
     }
 
@@ -54,7 +54,7 @@ public class SingleSKUPromotionTest {
         Collections.addAll(items,
                 new Item("R", 4, 25));
         Order order = new Order(items);
-        int discountedPrice = service.applyPromotion(order, promotions);
+        float discountedPrice = service.applyPromotion(order, promotions);
         Assertions.assertEquals(75, discountedPrice);
     }
 
@@ -67,7 +67,7 @@ public class SingleSKUPromotionTest {
         Collections.addAll(items,
                 new Item("R", 6, 25));
         Order order = new Order(items);
-        int discountedPrice = service.applyPromotion(order, promotions);
+        float discountedPrice = service.applyPromotion(order, promotions);
         Assertions.assertEquals(125, discountedPrice);
     }
 
@@ -80,12 +80,12 @@ public class SingleSKUPromotionTest {
         Collections.addAll(items,
                 new Item("R", 7, 25));
         Order order = new Order(items);
-        int discountedPrice = service.applyPromotion(order, promotions);
+        float discountedPrice = service.applyPromotion(order, promotions);
         Assertions.assertEquals(135, discountedPrice);
     }
 
     @Test
-    @DisplayName(value = "4R-> 75%4R  and 3R-> 60 applied once")
+    @DisplayName(value = "4R-> 75%4R  applied twice")
     public void testApplyPromotion6() {
         PromotionService service = new PromotionService();
         List<Promotion> promotions = TestUtil.getActivePromotions();
@@ -93,7 +93,7 @@ public class SingleSKUPromotionTest {
         Collections.addAll(items,
                 new Item("R", 8, 25));
         Order order = new Order(items);
-        int discountedPrice = service.applyPromotion(order, promotions);
-        Assertions.assertEquals(160, discountedPrice);
+        float discountedPrice = service.applyPromotion(order, promotions);
+        Assertions.assertEquals(150, discountedPrice);
     }
 }

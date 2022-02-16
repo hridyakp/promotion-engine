@@ -12,8 +12,8 @@ import java.util.List;
 
 public class CalculateService {
 
-    public int calculate(OrderPromotion orderPromotion) {
-        int totalValue = 0;
+    public float calculate(OrderPromotion orderPromotion) {
+        float totalValue = 0;
         if (!orderPromotion.getItemPromotions().isEmpty()) {
             //get total price on skus with single sku promo
             totalValue = totalValue + calculateSingleSKUPromotionPrice(orderPromotion.getItemPromotions());
@@ -29,22 +29,21 @@ public class CalculateService {
         return totalValue;
     }
 
-    private int calculateSingleSKUPromotionPrice(List<ItemPromotion> itemPromotions) {
+    private float calculateSingleSKUPromotionPrice(List<ItemPromotion> itemPromotions) {
         SinglePromoCalculator calculator = new SinglePromoCalculator();
-        int price = calculator.calculate(itemPromotions);
+        float price = calculator.calculate(itemPromotions);
         return price;
     }
 
-    private int calculateMultiSKUPromotionPrice(List<ComboPromotion> comboPromo) {
+    private float calculateMultiSKUPromotionPrice(List<ComboPromotion> comboPromo) {
         MultiPromoCalculator calculator = new MultiPromoCalculator();
-        int price = calculator.calculate(comboPromo);
+        float price = calculator.calculate(comboPromo);
         return price;
-
     }
 
-    private int calculateNonPromotionalPrice(List<NonPromotionalItem> nonPromoItems) {
+    private float calculateNonPromotionalPrice(List<NonPromotionalItem> nonPromoItems) {
         PriceCalculator calculator = new PriceCalculator();
-        int price = calculator.calculate(nonPromoItems);
+        float price = calculator.calculate(nonPromoItems);
         return price;
     }
 

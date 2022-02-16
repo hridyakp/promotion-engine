@@ -8,6 +8,6 @@ public class QuantityComparator implements Comparator<SingleSKUPromotion> {
 
     @Override
     public int compare(SingleSKUPromotion o1, SingleSKUPromotion o2) {
-        return o1.getPromotionItem().getQuantity() - o2.getPromotionItem().getQuantity();
+        return o2.getPromotionItem().getQuantity() - o1.getPromotionItem().getQuantity();
     }
 }

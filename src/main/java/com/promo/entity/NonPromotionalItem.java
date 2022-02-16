@@ -7,5 +7,5 @@ public class NonPromotionalItem {
     private String sku;
     private int skuPrice;
     private int quantity;
-    private int totalPrice;
+    private float totalPrice;
 }

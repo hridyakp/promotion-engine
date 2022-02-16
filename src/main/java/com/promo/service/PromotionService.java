@@ -16,10 +16,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class PromotionService {
-    public int applyPromotion(Order order, List<Promotion> activePromotions) {
+    public float applyPromotion(Order order, List<Promotion> activePromotions) {
         List<String> skus = order.getItems().stream().map(Item::getSKU).collect(Collectors.toList());
         Map<String, Integer> skuQuantityMap = order.getItems().stream().collect(Collectors.toMap(Item::getSKU, Item::getQuantity));
-        //Map<String, List<MultiSKUPromotion>> multiPromoMap = MultiSKUPromotionFinder.getPromotions(activePromotions, skus, skuQuantityMap);
 
         Map<String, List<SingleSKUPromotion>> singlePromoMap = SingleSKUPromotionFinder.getPromotions(activePromotions, skus, skuQuantityMap);
         Set<MultiSKUPromotion> multiPromoSet = MultiSKUPromotionFinder.getUniquePromotions(activePromotions, skus, skuQuantityMap);
@@ -28,7 +27,7 @@ public class PromotionService {
         OrderPromotion orderPromotion = promotionMapper.getOrderPromotionMapping(order, singlePromoMap, multiPromoSet);
 
         CalculateService calculateService = new CalculateService();
-        int totalPrice = calculateService.calculate(orderPromotion);
+        float totalPrice = calculateService.calculate(orderPromotion);
 
         return totalPrice;
     }

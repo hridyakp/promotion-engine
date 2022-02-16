@@ -7,15 +7,16 @@ import com.promo.entity.promotion.SingleSKUPromotion;
 import java.util.List;
 
 public class SinglePromoCalculator {
-    public int calculate(List<ItemPromotion> items) {
-        int price = 0;
+    public float calculate(List<ItemPromotion> items) {
+        float price = 0;
         for(ItemPromotion item : items){
             SingleSKUPromotion promotion = item.getPromotion() instanceof SingleSKUPromotion ? ((SingleSKUPromotion) item.getPromotion()) : null;
-            int reducedSKUPrice;
+            float reducedSKUPrice;
             if (promotion.getDiscountType().equals(DiscountType.FIXED_PRICE)) {
                 reducedSKUPrice = promotion.getValue();
             } else {
-                reducedSKUPrice = item.getSkuPrice() * (promotion.getValue() / 100);
+                float totalPrice = item.getSkuPrice() * item.getQuantity();
+                reducedSKUPrice =  totalPrice * (Float.valueOf(promotion.getValue())/100);
             }
             price = price + reducedSKUPrice;
             item.setTotalPrice(reducedSKUPrice);

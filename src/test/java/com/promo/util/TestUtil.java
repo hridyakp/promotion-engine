@@ -25,10 +25,10 @@ public class TestUtil {
         Promotion promotion3 = new MultiSKUPromotion("C1D1", promotionItemsCD, DiscountType.FIXED_PRICE, 30);
 
         //P and Q Promotion
-        PromotionItem promotionItemP3 = new PromotionItem("P3", 3);
-        Promotion promotion4 = new SingleSKUPromotion("P3", promotionItemP3, DiscountType.FIXED_PRICE, 50);
+        PromotionItem promotionItemP4 = new PromotionItem("P", 4);
+        Promotion promotion4 = new SingleSKUPromotion("P4", promotionItemP4, DiscountType.FIXED_PRICE, 60);
 
-        PromotionItem promotionItemP2 = new PromotionItem("P2", 2);
+        PromotionItem promotionItemP2 = new PromotionItem("P", 2);
         Promotion promotion5 = new SingleSKUPromotion("P2", promotionItemP2, DiscountType.PERCENTAGE, 80);
 
         PromotionItem promotionItemP1 = new PromotionItem("P", 1);
@@ -40,10 +40,11 @@ public class TestUtil {
         //R Promotion
         PromotionItem promotionItemR4 = new PromotionItem("R", 4);
         Promotion promotion7 = new SingleSKUPromotion("R4", promotionItemR4, DiscountType.PERCENTAGE, 75);
-        PromotionItem promotionItemR3 = new PromotionItem("R3", 3);
+
+        PromotionItem promotionItemR3 = new PromotionItem("R", 3);
         Promotion promotion8 = new SingleSKUPromotion("R3", promotionItemR3, DiscountType.FIXED_PRICE, 60);
 
-        Collections.addAll(promotions, promotion1, promotion2, promotion3, promotion4, promotion5, promotion6, promotion7);
+        Collections.addAll(promotions, promotion1, promotion2, promotion3, promotion4, promotion5, promotion6, promotion7, promotion8);
         return promotions;
     }
 }

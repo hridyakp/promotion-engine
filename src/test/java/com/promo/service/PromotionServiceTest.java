@@ -25,7 +25,7 @@ public class PromotionServiceTest {
                 new Item("B", 1, 30),
                 new Item("C", 1, 20));
         Order order = new Order(items);
-        int discountedPrice = service.applyPromotion(order, promotions);
+        float discountedPrice = service.applyPromotion(order, promotions);
         Assertions.assertEquals(100, discountedPrice);
     }
 
@@ -40,7 +40,7 @@ public class PromotionServiceTest {
                 new Item("B", 5, 30),
                 new Item("C", 1, 20));
         Order order = new Order(items);
-        int discountedPrice = service.applyPromotion(order, promotions);
+        float discountedPrice = service.applyPromotion(order, promotions);
         Assertions.assertEquals(370, discountedPrice);
     }
 
@@ -56,7 +56,7 @@ public class PromotionServiceTest {
                 new Item("C", 1, 20),
                 new Item("D", 1, 15));
         Order order = new Order(items);
-        int discountedPrice = service.applyPromotion(order, promotions);
+        float discountedPrice = service.applyPromotion(order, promotions);
         Assertions.assertEquals(280, discountedPrice);
     }
 
@@ -72,7 +72,7 @@ public class PromotionServiceTest {
                 new Item("C", 2, 20),
                 new Item("D", 2, 15));
         Order order = new Order(items);
-        int discountedPrice = service.applyPromotion(order, promotions);
+        float discountedPrice = service.applyPromotion(order, promotions);
         Assertions.assertEquals(140, discountedPrice);
     }
 
@@ -88,7 +88,7 @@ public class PromotionServiceTest {
                 new Item("C", 1, 20),
                 new Item("D", 2, 15));
         Order order = new Order(items);
-        int discountedPrice = service.applyPromotion(order, promotions);
+        float discountedPrice = service.applyPromotion(order, promotions);
         Assertions.assertEquals(125, discountedPrice);
     }
 
@@ -104,7 +104,7 @@ public class PromotionServiceTest {
                 new Item("C", 2, 20),
                 new Item("D", 2, 15));
         Order order = new Order(items);
-        int discountedPrice = service.applyPromotion(order, promotions);
+        float discountedPrice = service.applyPromotion(order, promotions);
         Assertions.assertEquals(315, discountedPrice);
     }
 }
