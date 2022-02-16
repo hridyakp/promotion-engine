@@ -1,23 +1,25 @@
 package com.promo.service;
 
-import com.promo.calculator.BasePriceCalculator;
-import com.promo.calculator.Calculator;
-import com.promo.calculator.PromoPriceCalculator;
-import com.promo.entity.order.Order;
-import com.promo.entity.promotion.MultiSKUPromotion;
-import com.promo.entity.promotion.SingleSKUPromotion;
+import com.promo.calculator.PriceCalculator;
+import com.promo.calculator.PromotionCalculator;
+import com.promo.entity.ItemPromotion;
 
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 public class CalculateService {
-    public int calculateTotalPrice(Order order, Map<String, List<SingleSKUPromotion>> singlePromoMap, Map<String, List<MultiSKUPromotion>> multiPromoMap) {
-        Calculator calculator;
-        if (singlePromoMap.isEmpty() && multiPromoMap.isEmpty()) {
-            calculator = new BasePriceCalculator();
-        } else {
-            calculator = new PromoPriceCalculator();
+
+    public int calculate(List<ItemPromotion> itemPromotions) {
+        if (null != itemPromotions && !itemPromotions.isEmpty()) {
+            PriceCalculator baseCalculator = new PriceCalculator();
+            List<ItemPromotion> nonPromoItems = itemPromotions.stream().filter(x -> x.getPromotion() == null).collect(Collectors.toList());
+            int baseValue = baseCalculator.calculate(nonPromoItems);
+
+            PromotionCalculator promotionCalculator = new PromotionCalculator();
+            List<ItemPromotion> promoItems = itemPromotions.stream().filter(x -> x.getPromotion() != null).collect(Collectors.toList());
+            int offerValue = promotionCalculator.calculate(promoItems);
+            return baseValue + offerValue;
         }
-        return calculator.getOrderValue(order, singlePromoMap, multiPromoMap);
+        return 0;
     }
 }

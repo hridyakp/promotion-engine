@@ -23,7 +23,8 @@ public class PromotionService {
         ItemPromotionMapper matcher = new ItemPromotionMapper();
         List<ItemPromotion> itemPromotions = matcher.getOrderValue(order, singlePromoMap, multiPromoMap);
         CalculateService calculateService = new CalculateService();
-        return calculateService.calculateTotalPrice(order, singlePromoMap, multiPromoMap);
+        int value = calculateService.calculate(itemPromotions);
+        return value;
     }
 
 }
