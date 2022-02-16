@@ -27,7 +27,7 @@ public class PromotionServiceDetailedTest {
         Assertions.assertEquals(140, discountedPrice);
     }
 
-    //@Test
+    @Test
     public void testApplyPromotion2() {
         PromotionService service = new PromotionService();
         List<Promotion> promotions = TestUtil.getActivePromotions();

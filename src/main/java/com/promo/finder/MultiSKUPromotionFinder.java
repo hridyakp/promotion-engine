@@ -3,12 +3,20 @@ package com.promo.finder;
 import com.promo.entity.promotion.MultiSKUPromotion;
 import com.promo.entity.promotion.Promotion;
 import com.promo.entity.promotion.PromotionItem;
-import com.promo.entity.promotion.SingleSKUPromotion;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class MultiSKUPromotionFinder {
+    public static Set<MultiSKUPromotion> getUniquePromotions(List<Promotion> activePromotions, List<String> skus, Map<String, Integer> skuQuantityMap) {
+        Set<MultiSKUPromotion> uniqueMultiPromotions = activePromotions.stream()
+                .filter(obj -> obj instanceof MultiSKUPromotion)
+                .map(MultiSKUPromotion.class::cast)
+                .filter(x -> getMatchingMultiPromotion(x, skus, skuQuantityMap))
+                .collect(Collectors.toSet());
+        return uniqueMultiPromotions;
+    }
+
     public static Map<String, List<MultiSKUPromotion>> getPromotions(List<Promotion> activePromotions, List<String> skus, Map<String, Integer> skuQuantityMap) {
         List<MultiSKUPromotion> matchingMultiPromotions = activePromotions.stream()
                 .filter(obj -> obj instanceof MultiSKUPromotion)
